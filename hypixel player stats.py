@@ -17,6 +17,7 @@ def send_req(url):
 url = f"https://api.hypixel.net/v2/player?key={api_key}&uuid={uuid}"
 data = send_req(url)
 
+# test note
 if data and "success" in data:
     player_name = data["player"]["playername"]
     display_name = data["player"]["displayname"]
