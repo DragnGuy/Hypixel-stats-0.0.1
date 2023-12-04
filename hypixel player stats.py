@@ -39,4 +39,4 @@ player_stats = pd.DataFrame({
 
     # Display the table
 print("\nPlayer Stats:")
-print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
+print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=True))
