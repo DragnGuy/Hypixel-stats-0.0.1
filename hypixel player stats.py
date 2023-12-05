@@ -29,7 +29,9 @@ if data and "success" in data:
     # display name
     display_name = data["player"]["displayname"]
 
-    # player rank/status
+
+    # Check if "newPackageRank/prefix" key exists, set default if not
+
     if "prefix" in data["player"]:
         rank = data["player"]["prefix"]
     elif "newPackageRank" in data["player"]:
@@ -37,12 +39,20 @@ if data and "success" in data:
     else:
         rank = "Default"
 
+    # Count the number of one-time achievements
+    onetimeachievements_count = len(data["player"]["achievementsOneTime"]) if "achievementsOneTime" in data["player"] else 0
+
+    print("Number of one-time achievements:", onetimeachievements_count)
+
     # Creating the table
     player_stats = pd.DataFrame({
-        "Info Type": ["Player Name", "Display Name", "Rank"],
-        "Info": [player_name, display_name, rank]
+
+        "Info Type:": ["Player Name", "Display Name", "Rank", "One-Time Achievements"],
+        "Info:": [player_name, display_name, rank, onetimeachievements_count]
+
     })
 
     # Display the table
     print("\nPlayer Stats:")
+
     print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
