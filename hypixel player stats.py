@@ -22,8 +22,10 @@ if data and "success" in data:
     player_name = data["player"]["playername"]
     display_name = data["player"]["displayname"]
     
+else:
+    print("please cheack the API and the UUID befor retrying")
+    
     # Check if "newPackageRank/prefix" key exists, set default if not
-
 if "prefix" in data["player"]:
         rank = data["player"]["prefix"]
 elif "newPackageRank" in data["player"]:
@@ -37,6 +39,10 @@ player_stats = pd.DataFrame({
         "Info:": [player_name, display_name, rank]
     })
 
+
     # Display the table
 print("\nPlayer Stats:")
 print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
+
+
+
