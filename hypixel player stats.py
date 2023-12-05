@@ -21,22 +21,26 @@ data = send_req(url)
 if data and "success" in data:
     player_name = data["player"]["playername"]
     display_name = data["player"]["displayname"]
-    
-    # Check if "newPackageRank/prefix" key exists, set default if not
 
-if "prefix" in data["player"]:
+    # Check if "newPackageRank/prefix" key exists, set default if not
+    if "prefix" in data["player"]:
         rank = data["player"]["prefix"]
-elif "newPackageRank" in data["player"]:
+    elif "newPackageRank" in data["player"]:
         rank = data["player"]["newPackageRank"]
-else:
+    else:
         rank = "Default"
 
+    # Count the number of one-time achievements
+    onetimeachievements_count = len(data["player"]["achievementsOneTime"]) if "achievementsOneTime" in data["player"] else 0
+
+    print("Number of one-time achievements:", onetimeachievements_count)
+
     # Creating the table
-player_stats = pd.DataFrame({
-        "Info Type:": ["Player Name", "Display Name", "Rank"],
-        "Info:": [player_name, display_name, rank]
+    player_stats = pd.DataFrame({
+        "Info Type:": ["Player Name", "Display Name", "Rank", "One-Time Achievements"],
+        "Info:": [player_name, display_name, rank, onetimeachievements_count]
     })
 
     # Display the table
-print("\nPlayer Stats:")
-print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=True))
+    print("\nPlayer Stats:")
+    print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=True))
