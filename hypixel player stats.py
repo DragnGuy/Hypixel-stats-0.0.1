@@ -42,17 +42,27 @@ if data and "success" in data:
     # Count the number of one-time achievements
     onetimeachievements_count = len(data["player"]["achievementsOneTime"]) if "achievementsOneTime" in data["player"] else 0
 
-    print("Number of one-time achievements:", onetimeachievements_count)
-
-    # Creating the table
+    
+    # Creating the table for stats
     player_stats = pd.DataFrame({
-
-        "Info Type:": ["Player Name", "Display Name", "Rank", "One-Time Achievements"],
-        "Info:": [player_name, display_name, rank, onetimeachievements_count]
-
+        "Info Type": ["Player Name", "Display Name", "Rank", "one time achivements"],
+        "Info": [player_name, display_name, rank, onetimeachievements_count]
     })
 
-    # Display the table
-    print("\nPlayer Stats:")
+    if "games_played_bedwars_1" in data["player"]["stats"]["Bedwars"]:
+        bedwars_games = data["player"]["stats"]["Bedwars"]["games_played_bedwars_1"]
+    else:
+     bedwars_games = "0"
 
+#creat a table for bedwars
+    bedwars = pd.DataFrame({
+        "Info Type": ["Bedwars Games"],
+        "Info": [bedwars_games]
+    })
+
+    # Display the table stats
+    print("\nPlayer Stats:")
     print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
+
+    print("\nBedwars Stats:")
+    print(tabulate(bedwars, headers="keys", tablefmt="fancy_grid", showindex=False))
