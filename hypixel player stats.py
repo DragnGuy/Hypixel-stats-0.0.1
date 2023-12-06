@@ -66,3 +66,4 @@ if data and "success" in data:
 
     print("\nBedwars Stats:")
     print(tabulate(bedwars, headers="keys", tablefmt="fancy_grid", showindex=False))
+#test
