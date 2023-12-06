@@ -48,21 +48,75 @@ if data and "success" in data:
         "Info Type": ["Player Name", "Display Name", "Rank", "one time achivements"],
         "Info": [player_name, display_name, rank, onetimeachievements_count]
     })
+# different types of bedwars games
+    bedwars_modes = [
+    "games_played_bedwars_1", "eight_one_games_played_bedwars", "games_played_bedwars", 
+    "eight_two_games_played_bedwars", "four_three_games_played_bedwars", "four_four_games_played_bedwars",
+    "eight_two_ultimate_games_played_bedwars", "four_four_ultimate_games_played_bedwars", 
+    "castle_games_played_bedwars", "four_four_rush_games_played_bedwars", "eight_two_rush_games_played_bedwars",
+    "eight_one_rush_games_played_bedwars", "eight_one_ultimate_games_played_bedwars", 
+    "tourney_bedwars4s_0_games_played_bedwars", "eight_two_lucky_games_played_bedwars", 
+    "four_four_lucky_games_played_bedwars", "eight_two_voidless_games_played_bedwars", 
+    "four_four_voidless_games_played_bedwars", "eight_two_armed_games_played_bedwars", 
+    "four_four_armed_games_played_bedwars", "two_four_games_played_bedwars", 
+    "tourney_bedwars_two_four_0_games_played_bedwars", "tourney_bedwars4s_1_games_played_bedwars", 
+    "eight_two_underworld_games_played_bedwars", "four_four_underworld_games_played_bedwars", 
+    "four_four_swap_games_played_bedwars", "eight_two_swap_games_played_bedwars"
+]
 
-    if "games_played_bedwars_1" in data["player"]["stats"]["Bedwars"]:
-        bedwars_games = data["player"]["stats"]["Bedwars"]["games_played_bedwars_1"]
-    else:
-     bedwars_games = "0"
+# set defalt bedwars games to 0
+total_bedwars_games = 0
 
-#creat a table for bedwars
-    bedwars = pd.DataFrame({
-        "Info Type": ["Bedwars Games"],
-        "Info": [bedwars_games]
-    })
+# Check if each bedwars mode key exists in the response and sum their values
+for mode in bedwars_modes:
+    if "Bedwars" in data["player"]["stats"] and mode in data["player"]["stats"]["Bedwars"]:
+        total_bedwars_games += data["player"]["stats"]["Bedwars"][mode]
 
-    # Display the table stats
-    print("\nPlayer Stats:")
-    print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
 
-    print("\nBedwars Stats:")
-    print(tabulate(bedwars, headers="keys", tablefmt="fancy_grid", showindex=False))
+#bedwars deaths gamemodes
+total_bedwars_deaths = [
+    "deaths_bedwars", "entity_attack_deaths_bedwars", "four_four_deaths_bedwars", "four_four_entity_attack_deaths_bedwars",
+    "four_four_void_deaths_bedwars", "void_deaths_bedwars", "void_deaths_bedwars", "four_four_fall_deaths_bedwars", 
+    "four_four_magic_deaths_bedwars", "magic_deaths_bedwars", "entity_explosion_final_deaths_bedwars", "final_deaths_bedwars", 
+    "four_four_entity_explosion_final_deaths_bedwars", "four_four_final_deaths_bedwars", "entity_attack_final_deaths_bedwars",
+    "four_four_entity_attack_final_deaths_bedwars", "four_four_void_final_deaths_bedwars", "void_final_deaths_bedwars", 
+    "fire_tick_deaths_bedwars", "four_four_fire_tick_deaths_bedwars", "fall_final_deaths_bedwars", "four_four_fall_final_deaths_bedwars",
+    "eight_two_deaths_bedwars", "eight_two_entity_attack_deaths_bedwars", "eight_two_entity_attack_final_deaths_bedwars", 
+    "eight_two_final_deaths_bedwars", "eight_two_void_deaths_bedwars", "four_four_magic_final_deaths_bedwars", 
+    "magic_final_deaths_bedwars", "eight_two_void_final_deaths_bedwars", "eight_two_entity_explosion_final_deaths_bedwars",
+    "eight_two_fall_final_deaths_bedwars", "four_four_projectile_deaths_bedwars", "projectile_deaths_bedwars", "four_three_deaths_bedwars",
+    "four_three_entity_attack_deaths_bedwars", "four_three_entity_attack_final_deaths_bedwars", "four_three_final_deaths_bedwars",
+    "four_three_void_deaths_bedwars", "four_three_entity_explosion_final_deaths_bedwars", "four_three_magic_final_deaths_bedwars",
+    "eight_two_magic_deaths_bedwars", "four_three_fall_deaths_bedwars", "four_three_fall_final_deaths_bedwars", "four_three_magic_deaths_bedwars",
+    "eight_two_magic_final_deaths_bedwars", "four_four_voidless_entity_attack_final_deaths_bedwars", "four_four_voidless_final_deaths_bedwars",
+    "four_four_voidless_deaths_bedwars", "four_four_voidless_entity_attack_deaths_bedwars", "four_four_voidless_magic_final_deaths_bedwars", 
+    "eight_two_voidless_deaths_bedwars", "eight_two_voidless_entity_attack_deaths_bedwars", "eight_two_voidless_entity_attack_final_deaths_bedwars",
+    "eight_two_voidless_final_deaths_bedwars", "eight_two_fall_deaths_bedwars", "four_three_void_final_deaths_bedwars",
+    "four_three_projectile_deaths_bedwars", "two_four_deaths_bedwars", "two_four_entity_attack_deaths_bedwars", "two_four_void_deaths_bedwars",
+    "two_four_final_deaths_bedwars", "eight_two_fire_tick_final_deaths_bedwars", "fire_tick_final_deaths_bedwars", "eight_two_lucky_deaths_bedwars",
+    "eight_two_lucky_entity_attack_final_deaths_bedwars", "eight_two_lucky_final_deaths_bedwars", "eight_two_lucky_void_deaths_bedwars",
+    "eight_two_projectile_deaths_bedwars", "eight_one_deaths_bedwars", "eight_one_final_deaths_bedwars", "eight_one_void_deaths_bedwars",
+    "eight_one_void_final_deaths_bedwars", "eight_one_void_final_deaths_bedwars", "eight_two_armed_entity_attack_deaths_bedwars",
+    "eight_two_armed_final_deaths_bedwars", "eight_two_armed_projectile_final_deaths_bedwars", "eight_two_armed_void_deaths_bedwars",
+    "two_four_fall_deaths_bedwars", "two_four_entity_attack_final_deaths_bedwars", "two_four_magic_deaths_bedwars",
+    "eight_two_swap_deaths_bedwars", "eight_two_swap_deaths_bedwars", "eight_two_swap_entity_attack_final_deaths_bedwars",
+    "eight_two_swap_final_deaths_bedwars", "eight_two_swap_void_deaths_bedwars", "eight_two_swap_entity_attack_deaths_bedwars",
+    "eight_two_underworld_deaths_bedwars", "eight_two_underworld_entity_attack_deaths_bedwars", "eight_two_underworld_fall_final_deaths_bedwars",
+    "eight_two_underworld_final_deaths_bedwars", "eight_two_underworld_void_deaths_bedwars", "eight_two_underworld_magic_final_deaths_bedwars", 
+    "two_four_magic_final_deaths_bedwars", "castle_deaths_bedwars", "castle_entity_attack_deaths_bedwars", "castle_fall_deaths_bedwars",
+    "castle_void_deaths_bedwars", "castle_final_deaths_bedwars", "castle_void_final_deaths_bedwars", "castle_magic_deaths_bedwars", 
+    "entity_explosion_deaths_bedwars", "four_four_entity_explosion_deaths_bedwars", "four_four_fire_tick_final_deaths_bedwars",
+    "two_four_fall_final_deaths_bedwars"
+]
+# Create a table for bedwars outside the loop
+bedwars = pd.DataFrame({
+    "Info Type": ["Total Bedwars Games Played"],
+    "Info": [total_bedwars_games]
+})
+
+# Display the table stats outside the loop
+print("\nPlayer Stats:")
+print(tabulate(player_stats, headers="keys", tablefmt="fancy_grid", showindex=False))
+
+print("\nBedwars Stats:")
+print(tabulate(bedwars, headers="keys", tablefmt="fancy_grid", showindex=False))
