@@ -74,7 +74,7 @@ for mode in bedwars_modes:
 
 
 #bedwars deaths gamemodes
-total_bedwars_deaths = [
+total_bedwars_death_types = [
     "deaths_bedwars", "entity_attack_deaths_bedwars", "four_four_deaths_bedwars", "four_four_entity_attack_deaths_bedwars",
     "four_four_void_deaths_bedwars", "void_deaths_bedwars", "void_deaths_bedwars", "four_four_fall_deaths_bedwars", 
     "four_four_magic_deaths_bedwars", "magic_deaths_bedwars", "entity_explosion_final_deaths_bedwars", "final_deaths_bedwars", 
@@ -108,10 +108,27 @@ total_bedwars_deaths = [
     "entity_explosion_deaths_bedwars", "four_four_entity_explosion_deaths_bedwars", "four_four_fire_tick_final_deaths_bedwars",
     "two_four_fall_final_deaths_bedwars"
 ]
+total_bedwars_deaths = 0
+
+# Check if each bedwars death type key exists in the response and sum their values
+for death_type in total_bedwars_death_types:
+    if "Bedwars" in data["player"]["stats"] and death_type in data["player"]["stats"]["Bedwars"]:
+        total_bedwars_deaths += data["player"]["stats"]["Bedwars"][death_type]
+
+total_bedwars_death_types_final = [
+
+]
+
+
+
+
+
+
+
 # Create a table for bedwars outside the loop
 bedwars = pd.DataFrame({
-    "Info Type": ["Total Bedwars Games Played"],
-    "Info": [total_bedwars_games]
+    "Info Type": ["Total Bedwars Games Played", "Total Deaths"],
+    "Info": [total_bedwars_games, total_bedwars_deaths]
 })
 
 # Display the table stats outside the loop
