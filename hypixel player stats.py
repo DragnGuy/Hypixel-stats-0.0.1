@@ -25,14 +25,7 @@ else:
     print("error please try name again")
     sys.exit()
 
-api_key = input("Please enter API key: ")
-
-def send_req(url):
-    print("Sending request...")
-    response = requests.get(url)
-    print("Response:")
-    data = response.json()
-    return data
+api_key = "9e175ec6-8963-4e69-8175-98d30548ebac"
 
 url = f"https://api.hypixel.net/v2/player?key={api_key}&uuid={uuid}"
 data = send_req(url)
@@ -41,10 +34,16 @@ if data and "success" in data:
     # Your existing code for successful API response
 
     # player name
-    player_name = data["player"]["playername"] if "playername" in data["player"] else "ACTUAL ERROR"
+    if "playername" in data["player"]:
+        player_name = data["player"]["playername"]
+    else:
+        player_name = "ACTUAL ERROR"
 
     # display name
-    display_name = data["player"]["displayname"] if "displayname" in data["player"] else "ACTUAL ERROR"
+    if "displayname" in ["player"]:
+        display_name = data["player"]["displayname"]
+    else:
+        display_name = "ACTUAL ERROR"
 
     # Check if "newPackageRank/prefix" key exists, set default if not
     if "prefix" in data["player"]:
@@ -67,11 +66,17 @@ if data and "success" in data:
     total_played_bedwars_games = data["player"]["stats"]["Bedwars"]["games_played_bedwars"] if "games_played_bedwars" in data["player"]["stats"]["Bedwars"] else 0
     # get  the playes deaths in bedwars
     total_bedwars_deaths = data["player"]["stats"]["Bedwars"]["deaths_bedwars"] if "deaths_bedwars" in data["player"]["stats"]["Bedwars"] else 0
+    # get final deaths
+    total_final_deaths = data["player"]["stats"]["Bedwars"]["final_deaths_bedwars"] if "final_deaths_bedwars" in data["player"]["stats"]["Bedwars"] else 0
+    #get the total bedwars kills
+    total_bedwars_kills = data["player"]["stats"]["Bedwars"]["kills_bedwars"] if "kills_bedwars" in data["player"]["stats"]["Bedwars"] else 0
+    # get the total final kills
+    total_bedwars_final_kills = data["player"]["stats"]["Bedwars"]["final_kills_bedwars"] if "final_kills_bedwars" in data["player"]["stats"]["Bedwars"] else 0
 
     # Create a table for bedwars outside the loop
     bedwars = pd.DataFrame({
-        "Info Type": ["Total Bedwars Games Played", "Total Deaths"],
-        "Info": [total_played_bedwars_games, total_bedwars_deaths]
+        "Info Type": ["Total Bedwars Games Played", "Total Deaths", "Total final deaths", "total kills", "Total final kills"],
+        "Info": [total_played_bedwars_games, total_bedwars_deaths, total_final_deaths, total_bedwars_kills, total_bedwars_final_kills]
     })
 
     # Display the table stats outside the loop
