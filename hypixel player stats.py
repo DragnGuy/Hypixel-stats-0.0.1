@@ -25,7 +25,7 @@ else:
     print("error please try name again")
     sys.exit()
 
-api_key = "9e175ec6-8963-4e69-8175-98d30548ebac"
+api_key = "5ad2efd8-b2ea-4aa2-8325-84dbe3495ae6"
 
 url = f"https://api.hypixel.net/v2/player?key={api_key}&uuid={uuid}"
 data = send_req(url)
@@ -72,11 +72,15 @@ if data and "success" in data:
     total_bedwars_kills = data["player"]["stats"]["Bedwars"]["kills_bedwars"] if "kills_bedwars" in data["player"]["stats"]["Bedwars"] else 0
     # get the total final kills
     total_bedwars_final_kills = data["player"]["stats"]["Bedwars"]["final_kills_bedwars"] if "final_kills_bedwars" in data["player"]["stats"]["Bedwars"] else 0
+    #get the total bedwars wins
+    total_bedwars_wins = data["player"]["stats"]["Bedwars"]["bedwars_wins"] if "bedwars_wins" in data["player"]["stats"]["Bedwars"] else 0
+    #get the total losses
+    total_bedwars_losses = data["player"]["stats"]["Bedwars"]["losses_bedwars"] if "losses_bedwars" in data["player"]["stats"]["Bedwars"] else 0
 
     # Create a table for bedwars outside the loop
     bedwars = pd.DataFrame({
-        "Info Type": ["Total Bedwars Games Played", "Total Deaths", "Total final deaths", "total kills", "Total final kills"],
-        "Info": [total_played_bedwars_games, total_bedwars_deaths, total_final_deaths, total_bedwars_kills, total_bedwars_final_kills]
+        "Info Type": ["Total Bedwars Games Won", "Total Bedwars Games Lost", "Total Bedwars Games Played", "Total Deaths", "Total final deaths", "total kills", "Total final kills"],
+        "Info": [total_bedwars_wins, total_bedwars_losses, total_bedwars_losses, total_played_bedwars_games, total_bedwars_deaths, total_final_deaths, total_bedwars_kills, total_bedwars_final_kills]
     })
 
     # Display the table stats outside the loop
